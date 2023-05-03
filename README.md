@@ -7,6 +7,5 @@
     * 콘솔 웹 접속 주소 : [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
     * ID 및 PASSWORD 는 기본 설정 그대로 사용 가능 합니다.
     * In Memory 기반 이기에 어플리케이션이 종료 시 데이터는 초기화 됩니다.
-* 본 어플리케이션 구동 시, flyway 를 통하여 DB에 Schema / init Data 가 반영될 수 있도록 설정해 두었습니다.
-* 어플리케이션 구동 시 flyway 를 통해 자동으로 데이터가 반영될 수 있도록 하였습니다.
+* 본 어플리케이션 구동 시, flyway 를 통하여 Schema 및 초기 data 가 반영 되도록 설정했습니다. 
 
