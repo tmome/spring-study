@@ -1,4 +1,4 @@
-package sample.springstudy.domain.board.dto;
+package sample.springstudy.domain.boardComment.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;

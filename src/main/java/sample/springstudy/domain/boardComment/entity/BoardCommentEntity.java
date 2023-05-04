@@ -1,4 +1,4 @@
-package sample.springstudy.domain.board.entity;
+package sample.springstudy.domain.boardComment.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import sample.springstudy.domain.board.entity.BoardEntity;
 
 @Getter
 @NoArgsConstructor

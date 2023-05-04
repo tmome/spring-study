@@ -24,8 +24,8 @@ public class BoardDto {
   @Schema(description = "게시물 수정일")
   private LocalDateTime updateDate;
 
-  @Schema(description = "게시물 댓글 목록")
-  List<BoardCommentDto> boardCommentList;
+//  @Schema(description = "게시물 댓글 목록")
+//  List<BoardCommentDto> boardCommentList;
 
   @QueryProjection
   public BoardDto(final BoardEntity boardEntity) {
