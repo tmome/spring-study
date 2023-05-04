@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import sample.springstudy.domain.boardComment.entity.BoardCommentEntity;
 
 @Getter
 @NoArgsConstructor
@@ -61,12 +62,15 @@ public class BoardEntity {
   @Column(name = "update_date", nullable = false)
   private LocalDateTime updateDate;
 
-  @OneToMany(
-      mappedBy = "board",
-      fetch = FetchType.LAZY,
-      cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
-      orphanRemoval = true
-  )
-  private Set<BoardCommentEntity> comments = new LinkedHashSet<>();
+  /**
+   * 추후 확장성 고려 board_comment 테이블 호출 정보는 따로 End Point 로 분기 작업 진행 예정 (연관 관계 제거 및 댓글 페이징 처리)
+   */
+//  @OneToMany(
+//      mappedBy = "board",
+//      fetch = FetchType.LAZY,
+//      cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+//      orphanRemoval = true
+//  )
+//  private Set<BoardCommentEntity> comments = new LinkedHashSet<>();
 
 }
