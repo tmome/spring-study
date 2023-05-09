@@ -1,0 +1,36 @@
+server:
+  servlet:
+    encoding:
+      force-response: true
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        show_sql: false
+        format_sql: true
+        order_inserts: true
+        order_updates: true
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:spring-study;MODE=MYSQL;
+    username: sa
+    password:
+
+  sql:
+    init:
+      platform: h2
+      mode: always
+
+  flyway:
+    enabled: false
+
+springdoc:
+  swagger-ui:
+    enabled: false
