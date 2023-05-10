@@ -7,7 +7,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static sample.springstudy.domain.board.dto.BoardPaginatedResponseDto.builder;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -24,6 +26,7 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import sample.springstudy.domain.board.application.BoardService;
+import sample.springstudy.domain.board.dto.BoardContentsResponseDto;
 import sample.springstudy.domain.board.dto.BoardPaginatedResponseDto;
 import sample.springstudy.domain.global.support.page.PageResponse;
 import sample.springstudy.domain.global.support.utils.ApiResponseGenerator;
@@ -50,7 +53,7 @@ class BoardApiTest {
     final var paging =
         PageRequest.of(0, 20, Sort.by(Order.asc("createDate")));
 
-    final var responseDto = BoardPaginatedResponseDto.builder()
+    final var responseDto = builder()
         .boardId(LONG_ONE)
         .boardTitle("테스트 제목")
         .createDate(LocalDateTime.now())
@@ -78,6 +81,39 @@ class BoardApiTest {
         .getResponse()
         .getContentAsString();
 
+    assertThat(actualResult).isEqualTo(jsonString);
+  }
+
+  @Test
+  @DisplayName("특정 게시물 조회")
+  void testGetBoardContent() throws Exception {
+    //given
+    final var boardId = LONG_ONE;
+
+    final var result = BoardContentsResponseDto.builder()
+        .boardId(LONG_ONE)
+        .boardTitle("테스트 게시물")
+        .createDate(LocalDateTime.now())
+        .updateDate(LocalDateTime.now())
+        .boardContent("테스트 내용")
+        .build();
+
+    when(boardService.getBoardContent(boardId))
+        .thenReturn(result);
+
+    //when
+    final var jsonString = objectMapper.writeValueAsString(ApiResponseGenerator.success(result));
+
+    final var actualResult = mockMvc.perform(
+        get("/api/board/1")
+            .accept(APPLICATION_JSON_VALUE))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+
+    //then
     assertThat(actualResult).isEqualTo(jsonString);
   }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sample.springstudy.domain.board.dto.BoardContentsResponseDto;
 import sample.springstudy.domain.board.dto.BoardPaginatedResponseDto;
 import sample.springstudy.domain.board.application.BoardService;
 import sample.springstudy.domain.global.support.page.PageResponse;
@@ -37,7 +38,8 @@ public class BoardApi {
   }
 
   @GetMapping("/{boardId}")
-  public ApiResponse<Object> getPost(final @PathVariable Long boardId) {
-    return ApiResponseGenerator.success(null);
+  @Operation(summary = "특정 게시물 가져오기", description = "특정 게시물 내용을 반환 합니다.")
+  public ApiResponse<BoardContentsResponseDto> getBoardContentResponse(final @PathVariable Long boardId) {
+    return ApiResponseGenerator.success(boardService.getBoardContent(boardId));
   }
 }
