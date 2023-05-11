@@ -4,6 +4,7 @@ import com.querydsl.core.annotations.QueryProjection;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sample.springstudy.domain.board.entity.BoardEntity;
@@ -37,4 +38,18 @@ public class BoardDto {
     this.createDate = boardEntity.getCreateDate();
     this.updateDate = boardEntity.getUpdateDate();
   }
+
+  @Builder
+  public BoardDto(
+      Long boardId,
+      String boardTitle,
+      LocalDateTime createDate,
+      LocalDateTime updateDate
+  ) {
+    this.boardId = boardId;
+    this.boardTitle = boardTitle;
+    this.createDate = createDate;
+    this.updateDate = updateDate;
+  }
 }
+

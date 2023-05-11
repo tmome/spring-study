@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static sample.springstudy.domain.board.dto.BoardPaginatedResponseDto.builder;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -27,7 +26,6 @@ import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import sample.springstudy.domain.board.application.BoardService;
 import sample.springstudy.domain.board.dto.BoardContentsResponseDto;
-import sample.springstudy.domain.board.dto.BoardPaginatedResponseDto;
 import sample.springstudy.domain.global.support.page.PageResponse;
 import sample.springstudy.domain.global.support.utils.ApiResponseGenerator;
 
