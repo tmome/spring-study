@@ -1,7 +1,6 @@
 package sample.springstudy.domain.global.handler;
 
 
-import com.sun.jdi.request.InvalidRequestStateException;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,10 +15,7 @@ import sample.springstudy.domain.global.support.utils.ApiResponseGenerator;
 public class ApiExceptionHandler {
 
   @ResponseStatus(HttpStatus.OK)
-  @ExceptionHandler({
-      EntityNotFoundException.class,
-      InvalidRequestStateException.class
-  })
+  @ExceptionHandler({EntityNotFoundException.class})
   public ApiResponse<Void> dataException(final BusinessException businessException) {
     return businessException(businessException);
   }
