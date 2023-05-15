@@ -8,6 +8,7 @@ import static sample.springstudy.domain.board.dto.BoardPaginatedResponseDto.buil
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +19,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import sample.springstudy.domain.board.dto.BoardContentsResponseDto;
 import sample.springstudy.domain.board.dto.BoardDto;
 import sample.springstudy.domain.board.dto.BoardPaginatedResponseDto;
+import sample.springstudy.domain.board.entity.BoardEntity;
 import sample.springstudy.domain.board.repository.BoardRepository;
 
 @DisplayName("application Service Layer Test")
@@ -66,5 +69,29 @@ class BoardServiceTest {
         .hasOnlyElementsOfType(BoardPaginatedResponseDto.class)
         .extracting("boardTitle")
         .contains("테스트 제목");
+  }
+
+  @Test
+  @DisplayName("application Layer 특정 게시물 조회")
+  void testGetBoardContent() {
+    final var boardId = LONG_ONE;
+
+    final var result = BoardEntity.builder()
+        .boardId(LONG_ONE)
+        .boardTitle("테스트 게시물")
+        .createDate(LocalDateTime.now())
+        .updateDate(LocalDateTime.now())
+        .boardContent("테스트 내용")
+        .build();
+
+
+    when(boardRepository.findById(boardId))
+        .thenReturn(Optional.ofNullable(result));
+
+    assertThat(result)
+        .isNotNull()
+        .isInstanceOf(BoardEntity.class)
+        .extracting("boardId")
+        .isEqualTo(boardId);
   }
 }

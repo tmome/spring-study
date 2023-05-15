@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -73,4 +74,20 @@ public class BoardEntity {
 //  )
 //  private Set<BoardCommentEntity> comments = new LinkedHashSet<>();
 
+  @Builder
+  public BoardEntity(
+      Long boardId,
+      String boardTitle,
+      String boardContent,
+      boolean boardDeleteYn,
+      LocalDateTime createDate,
+      LocalDateTime updateDate
+  ) {
+    this.boardId = boardId;
+    this.boardTitle = boardTitle;
+    this.boardContent = boardContent;
+    this.boardDeleteYn = boardDeleteYn;
+    this.createDate = createDate;
+    this.updateDate = updateDate;
+  }
 }
