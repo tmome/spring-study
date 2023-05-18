@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sample.springstudy.domain.board.dto.BoardContentsResponseDto;
 import sample.springstudy.domain.board.dto.BoardPaginatedResponseDto;
+import sample.springstudy.domain.board.dto.BoardSaveSource;
+import sample.springstudy.domain.board.entity.BoardEntity;
 import sample.springstudy.domain.board.repository.BoardRepository;
 
 @Service
@@ -28,5 +30,9 @@ public class BoardService {
     return BoardContentsResponseDto.of(boardRepository
         .findById(boardId)
         .orElseThrow(EntityNotFoundException::new));
+  }
+
+  public BoardContentsResponseDto insertBoard(final BoardSaveSource boardSaveSource) {
+    return BoardContentsResponseDto.of(boardRepository.save(BoardEntity.saveBuildOf(boardSaveSource)));
   }
 }

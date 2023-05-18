@@ -2,17 +2,21 @@ package sample.springstudy.domain.board.api;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sample.springstudy.domain.board.dto.BoardContentsResponseDto;
 import sample.springstudy.domain.board.dto.BoardPaginatedResponseDto;
 import sample.springstudy.domain.board.application.BoardService;
+import sample.springstudy.domain.board.dto.BoardSaveSource;
 import sample.springstudy.domain.global.support.page.PageResponse;
 import sample.springstudy.domain.global.support.utils.ApiResponse;
 import sample.springstudy.domain.global.support.utils.ApiResponseGenerator;
@@ -41,5 +45,11 @@ public class BoardApi {
   @Operation(summary = "특정 게시물 가져오기", description = "특정 게시물 내용을 반환 합니다.")
   public ApiResponse<BoardContentsResponseDto> getBoardContentResponse(final @PathVariable Long boardId) {
     return ApiResponseGenerator.success(boardService.getBoardContent(boardId));
+  }
+
+  @PostMapping
+  @Operation(summary = "게시물 생성" , description = "게시물 생성 내용을 반환")
+  public ApiResponse<BoardContentsResponseDto> savePost(final @RequestBody @Valid BoardSaveSource boardSaveSource) {
+    return ApiResponseGenerator.success(boardService.insertBoard(boardSaveSource));
   }
 }

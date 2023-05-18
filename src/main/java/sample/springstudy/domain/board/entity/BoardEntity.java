@@ -1,22 +1,17 @@
 package sample.springstudy.domain.board.entity;
 
 import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import sample.springstudy.domain.boardComment.entity.BoardCommentEntity;
+import sample.springstudy.domain.board.dto.BoardSaveSource;
 
 @Getter
 @NoArgsConstructor
@@ -89,5 +84,15 @@ public class BoardEntity {
     this.boardDeleteYn = boardDeleteYn;
     this.createDate = createDate;
     this.updateDate = updateDate;
+  }
+
+  public static BoardEntity saveBuildOf(final BoardSaveSource boardSaveSource) {
+    return BoardEntity.builder()
+        .boardTitle(boardSaveSource.getBoardTitle())
+        .boardContent(boardSaveSource.getBoardContent())
+        .boardDeleteYn(Boolean.FALSE)
+        .createDate(LocalDateTime.now())
+        .updateDate(LocalDateTime.now())
+        .build();
   }
 }
