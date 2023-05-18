@@ -3,8 +3,10 @@ package sample.springstudy.domain.board.api;
 import static org.apache.commons.lang3.math.NumberUtils.LONG_ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static sample.springstudy.domain.board.dto.BoardPaginatedResponseDto.builder;
@@ -26,6 +28,7 @@ import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import sample.springstudy.domain.board.application.BoardService;
 import sample.springstudy.domain.board.dto.BoardContentsResponseDto;
+import sample.springstudy.domain.board.dto.BoardSaveSource;
 import sample.springstudy.domain.global.support.page.PageResponse;
 import sample.springstudy.domain.global.support.utils.ApiResponseGenerator;
 
@@ -105,6 +108,48 @@ class BoardApiTest {
     final var actualResult = mockMvc.perform(
         get("/api/board/1")
             .accept(APPLICATION_JSON_VALUE))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+
+    //then
+    assertThat(actualResult).isEqualTo(jsonString);
+  }
+
+  @Test
+  @DisplayName("특정 게시물 생성 테스트")
+  void testInsertBoard() throws Exception {
+
+    //given
+    final var boardSaveSource = BoardSaveSource
+        .builder()
+        .boardTitle("테스트 게시물")
+        .boardContent("테스트 컨텐츠")
+        .build();
+
+    final var boardContentResponseDto = BoardContentsResponseDto.builder()
+        .boardId(LONG_ONE)
+        .boardTitle("테스트 게시물")
+        .boardContent("테스트 컨텐츠")
+        .createDate(LocalDateTime.now())
+        .updateDate(LocalDateTime.now())
+        .build();
+
+    when(boardService.insertBoard(boardSaveSource))
+        .thenReturn(boardContentResponseDto);
+
+    final var jsonString =
+        objectMapper.writeValueAsString(ApiResponseGenerator.success(boardContentResponseDto));
+
+    // when
+    final var actualResult = mockMvc.perform(
+            post("/api/board")
+                .contentType(APPLICATION_JSON)
+                .accept(APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(boardContentResponseDto))
+        )
         .andDo(print())
         .andExpect(status().isOk())
         .andReturn()

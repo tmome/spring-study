@@ -3,6 +3,7 @@ package sample.springstudy.domain.board.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import javax.validation.constraints.NotBlank;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,4 +19,13 @@ public class BoardSaveSource {
   @NotBlank
   @Schema(description = "내용", example = "게시물 내용", required = true)
   private String boardContent;
+
+  @Builder
+  public BoardSaveSource(
+      String boardTitle,
+      String boardContent
+  ) {
+    this.boardTitle = boardTitle;
+    this.boardContent = boardContent;
+  }
 }
